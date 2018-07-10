@@ -1,0 +1,26 @@
+---
+# tasks file for openvpn-client
+
+- name: Install OpenVPN support packages
+  become: true
+  apt:
+    update_cache: true
+    name: "{{ item }}"
+    state: present
+  with_items:
+    - openvpn
+    
+- name: Copy configuration file
+  become: true
+  copy:
+    src: "{{ ovpn_conf_dir }}/"
+    dest: /etc/openvpn/
+
+- name: Autostart OpenVPN configurations
+  become: true
+  lineinfile:
+    path: /etc/default/openvpn
+    regexp: '^AUTOSTART'
+    line: 'AUTOSTART="all"'
+    state: present
+
