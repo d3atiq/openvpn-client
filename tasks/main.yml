@@ -5,10 +5,8 @@
   become: true
   apt:
     update_cache: true
-    name: "{{ item }}"
+    name: openvpn
     state: present
-  with_items:
-    - openvpn
     
 - name: Copy configuration file
   become: true
